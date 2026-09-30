@@ -1,7 +1,395 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GLOBALTEK | Power PM</title><style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f3f6fa;color:#14233b}header{background:#071b3b;color:white;padding:28px 7%;border-bottom:5px solid #d71920}.brand{font-size:30px;font-weight:800}.brand b{color:#e52b31}.sub{margin-top:6px;opacity:.85}main{max-width:1050px;margin:38px auto;padding:0 22px}.box,.card,.results{background:white;border:1px solid #dce4ee;border-radius:14px}.box{padding:32px;box-shadow:0 8px 28px #071b3b12}h1{color:#071b3b;margin:0 0 8px}.lead{color:#68778c;margin-bottom:27px}label{display:block;font-weight:bold;margin-bottom:9px}.row{display:flex;gap:12px}input{flex:1;padding:15px;border:1px solid #bcc8d8;border-radius:9px;font-size:15px}button{background:#d71920;color:white;border:0;border-radius:9px;padding:0 25px;font-weight:bold;cursor:pointer}.note{font-size:13px;color:#68778c;margin-top:12px}.section{margin-top:25px}.title{font-weight:800;color:#071b3b;margin-bottom:12px;font-size:18px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{padding:18px}.k{font-size:12px;color:#68778c}.v{font-size:18px;font-weight:bold;color:#071b3b;margin-top:7px}.results{overflow:hidden}.item{padding:15px 18px;border-bottom:1px solid #edf1f5;display:flex;justify-content:space-between}.item:last-child{border:0}.status{font-size:13px;font-weight:bold;background:#fff4df;color:#936200;padding:6px 10px;border-radius:20px}footer{text-align:center;color:#8793a3;font-size:12px;padding:32px}@media(max-width:700px){.row{flex-direction:column}button{padding:15px}.grid{grid-template-columns:1fr 1fr}}</style></head><body>
-<header><div class="brand">GLOBAL<b>TEK</b></div><div class="sub">Power Department · Preventive Maintenance</div></header><main>
-<div class="box"><h1>Preventive Maintenance Review System</h1><p class="lead">Review FMS task evidence and preventive maintenance documentation from one professional workspace.</p><label>FMS Task URL</label><div class="row"><input id="u" placeholder="https://globaltek.go2field.iq/task/..."><button onclick="review()">Review Task</button></div><div class="note">Enter an authorized FMS task link to start the review.</div></div>
-<div class="section"><div class="title">Task Overview</div><div class="grid"><div class="card"><div class="k">TASK CODE</div><div class="v">—</div></div><div class="card"><div class="k">SITE</div><div class="v">—</div></div><div class="card"><div class="k">PROVINCE</div><div class="v">—</div></div><div class="card"><div class="k">PHOTOS</div><div class="v">—</div></div></div></div>
-<div class="section"><div class="title">PM Review Results</div><div class="results"><div class="item"><span>Task connection</span><span class="status" id="s">Waiting for task</span></div><div class="item"><span>Photo evidence</span><span class="status">Not reviewed</span></div><div class="item"><span>PM checklist validation</span><span class="status">Integration pending</span></div><div class="item"><span>Visible issue detection</span><span class="status">Integration pending</span></div></div></div></main>
-<footer>GLOBALTEK · Power Department · Preventive Maintenance Review System</footer><script>function review(){if(!document.getElementById("u").value.trim()){alert("Please enter an FMS Task URL.");return}document.getElementById("s").textContent="Interface ready";alert("Interface is working. Live FMS integration is the next stage.")}</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLOBALTEK | PM Review System</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f6fa;
+    color:#0b2346;
+}
+
+header{
+    background:#071b3b;
+    color:white;
+    padding:28px 7%;
+    border-bottom:5px solid #d71920;
+}
+
+.brand{
+    font-size:30px;
+    font-weight:800;
+}
+
+.brand span{
+    color:#ed1c24;
+}
+
+.subtitle{
+    margin-top:5px;
+    color:#dce5f2;
+}
+
+main{
+    max-width:1100px;
+    margin:35px auto;
+    padding:0 20px;
+}
+
+.panel{
+    background:white;
+    border:1px solid #d9e1eb;
+    border-radius:14px;
+    padding:28px;
+    box-shadow:0 10px 30px rgba(7,27,59,.08);
+}
+
+h1{
+    margin-top:0;
+    margin-bottom:8px;
+    font-size:30px;
+}
+
+.description{
+    color:#63738b;
+    margin-bottom:28px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.inputRow{
+    display:flex;
+    gap:12px;
+}
+
+input{
+    flex:1;
+    padding:14px;
+    border:1px solid #bfcada;
+    border-radius:7px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#0b3b75;
+}
+
+button{
+    background:#d71920;
+    color:white;
+    border:0;
+    padding:0 25px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#b9141a;
+}
+
+.hint{
+    font-size:12px;
+    color:#6d7c91;
+    margin-top:10px;
+}
+
+.sectionTitle{
+    font-size:18px;
+    font-weight:700;
+    margin:27px 0 12px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.card{
+    background:white;
+    border:1px solid #d9e1eb;
+    border-radius:12px;
+    padding:17px;
+}
+
+.cardTitle{
+    font-size:11px;
+    color:#6a7990;
+    margin-bottom:8px;
+}
+
+.cardValue{
+    font-size:17px;
+    font-weight:bold;
+}
+
+.results{
+    background:white;
+    border:1px solid #d9e1eb;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.result{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+    border-bottom:1px solid #edf0f4;
+}
+
+.result:last-child{
+    border-bottom:0;
+}
+
+.status{
+    padding:6px 11px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    background:#fff1d6;
+    color:#996000;
+}
+
+.status.blue{
+    background:#e5efff;
+    color:#174b8a;
+}
+
+.status.green{
+    background:#dff5e7;
+    color:#15743a;
+}
+
+.status.red{
+    background:#fde5e5;
+    color:#b42323;
+}
+
+.message{
+    display:none;
+    margin-top:18px;
+    padding:14px;
+    border-radius:8px;
+    background:#e8f1ff;
+    color:#174b8a;
+    font-size:14px;
+}
+
+footer{
+    text-align:center;
+    padding:35px 10px 20px;
+    color:#8491a3;
+    font-size:12px;
+}
+
+@media(max-width:800px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .inputRow{
+        flex-direction:column;
+    }
+
+    button{
+        padding:14px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">GLOBAL<span>TEK</span></div>
+    <div class="subtitle">Power Department · Preventive Maintenance</div>
+</header>
+
+<main>
+
+<div class="panel">
+
+<h1>Preventive Maintenance Review System</h1>
+
+<div class="description">
+Automatic review of FMS preventive maintenance task evidence and documentation.
+</div>
+
+<label for="taskURL">FMS Task URL</label>
+
+<div class="inputRow">
+<input
+id="taskURL"
+type="url"
+placeholder="https://globaltek.go2field.iq/task/..."
+>
+<button onclick="reviewTask()">Review Task</button>
+</div>
+
+<div class="hint">
+Enter an authorized GLOBALTEK FMS task link.
+</div>
+
+<div id="message" class="message"></div>
+
+</div>
+
+
+<div class="sectionTitle">Task Overview</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="cardTitle">TASK CODE</div>
+<div class="cardValue" id="taskCode">—</div>
+</div>
+
+<div class="card">
+<div class="cardTitle">SITE</div>
+<div class="cardValue" id="site">—</div>
+</div>
+
+<div class="card">
+<div class="cardTitle">PROVINCE</div>
+<div class="cardValue" id="province">—</div>
+</div>
+
+<div class="card">
+<div class="cardTitle">PHOTOS</div>
+<div class="cardValue" id="photos">—</div>
+</div>
+
+</div>
+
+
+<div class="sectionTitle">PM Review Results</div>
+
+<div class="results">
+
+<div class="result">
+<span>FMS Task Connection</span>
+<span class="status" id="connection">Waiting for task</span>
+</div>
+
+<div class="result">
+<span>Photo Evidence</span>
+<span class="status" id="evidence">Not reviewed</span>
+</div>
+
+<div class="result">
+<span>PM Checklist Validation</span>
+<span class="status" id="checklist">Waiting for analysis</span>
+</div>
+
+<div class="result">
+<span>Visible Issue Detection</span>
+<span class="status" id="issues">Waiting for analysis</span>
+</div>
+
+</div>
+
+</main>
+
+<footer>
+GLOBALTEK · Power Department · Preventive Maintenance Review System
+</footer>
+
+
+<script>
+
+function reviewTask(){
+
+    const url =
+    document.getElementById("taskURL").value.trim();
+
+    const message =
+    document.getElementById("message");
+
+    if(!url){
+        alert("Please enter an FMS Task URL.");
+        return;
+    }
+
+    if(!url.includes("globaltek.go2field.iq/task/")){
+        alert("Please enter a valid GLOBALTEK FMS task link.");
+        return;
+    }
+
+    localStorage.setItem("globaltek_pm_task_url",url);
+
+    document.getElementById("connection").innerText =
+    "Task submitted";
+
+    document.getElementById("connection").className =
+    "status blue";
+
+    document.getElementById("evidence").innerText =
+    "Connecting to FMS";
+
+    document.getElementById("evidence").className =
+    "status blue";
+
+    document.getElementById("checklist").innerText =
+    "Waiting for task data";
+
+    document.getElementById("issues").innerText =
+    "Waiting for task data";
+
+    message.style.display="block";
+
+    message.innerHTML =
+    "<strong>Task received.</strong> The PM Assistant connection will retrieve the authorized FMS task information and photo evidence.";
+
+    window.dispatchEvent(
+        new CustomEvent(
+            "GLOBALTEK_PM_REVIEW_REQUEST",
+            {detail:{taskUrl:url}}
+        )
+    );
+}
+
+window.addEventListener(
+"GLOBALTEK_PM_REVIEW_RESULT",
+function(event){
+
+    const data=event.detail || {};
+
+    if(data.taskCode)
+        document.getElementById("taskCode").innerText=data.taskCode;
+
+    if(data.site)
+        document.getElementById("site").innerText=data.site;
+
+    if(data.province)
+        document.getElementById("province").innerText=data.province;
+
+    if(data.photos !== undefined)
+        document.getElementById("photos").innerText=data.photos;
+
+    document.getElementById("connection").innerText="Connected";
+    document.getElementById("connection").className="status green";
+
+    document.getElementById("evidence").innerText="Evidence received";
+    document.getElementById("evidence").className="status green";
+}
+);
+
+</script>
+
+</body>
+</html>
